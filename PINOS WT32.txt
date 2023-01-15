@@ -1,6 +1,8 @@
 WT32 - Portas:
 
-IO 0 - Apenas para transmissão e carregamento de código
+IO 0 - Apenas para transmissão e carregamento de código, Deve ser conectado a GND para carrgar o código 
+
+IO 1 - OutPut, Tx
 
 IO 2 - OutPut/InPut 
 
