@@ -1,4 +1,4 @@
-/*
+
 #include <ETH.h> //LIB padrão 
 
 void setup()
@@ -30,22 +30,5 @@ void loop()
   digitalWrite(17,LOW);
   digitalWrite(32,LOW);
   digitalWrite(33,LOW);
-  delay(1000);
-}
-*/
-
-#include <ETH.h> //LIB padrão 
-
-void setup()
-{
-  pinMode(17,OUTPUT);
-  ETH.begin(1, 16,23,18,ETH_PHY_LAN8720,ETH_CLOCK_GPIO0_IN);
-}
-
-void loop()
-{
-  digitalWrite(17,HIGH);
-  delay(1000);  
-  digitalWrite(17,LOW);
   delay(1000);
 }
