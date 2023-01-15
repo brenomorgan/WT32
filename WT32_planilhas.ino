@@ -1,0 +1,143 @@
+#include <ETH.h> //LIB padrão 
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include "string.h"
+
+static bool eth_connected = false;
+
+//const char* ssid     = "********"; // nome da rede
+//const char* password = "********"; // senha
+String GScriptId = "AKfycbxZreK1sLQB8ocwEE19tMXmrGs3jnx5e84OkiFdA9JSkpsmzB4-1be7mZZYNbCK6vDK"; // id do script
+String segredo = "valor1"; // segredo da tabela para retirar item
+
+const int sendInterval = 50;
+
+
+const int botao = 35;
+static int pressionado = 0;
+static int liberado = 0;
+
+
+void WiFiEvent(WiFiEvent_t event)
+{
+  Serial.println("WiFiEvent");
+  switch (event) {
+    case ARDUINO_EVENT_ETH_START:
+      Serial.println("ETH Started");
+      //set eth hostname here
+      ETH.setHostname("esp32-ethernet");
+      break;
+    case ARDUINO_EVENT_ETH_CONNECTED:
+      Serial.println("ETH Connected");
+      break;
+    case ARDUINO_EVENT_ETH_GOT_IP:
+      Serial.print("ETH MAC: ");
+      Serial.print(ETH.macAddress());
+      Serial.print(", IPv4: ");
+      Serial.print(ETH.localIP());
+      if (ETH.fullDuplex()) {
+        Serial.print(", FULL_DUPLEX");
+      }
+      Serial.print(", ");
+      Serial.print(ETH.linkSpeed());
+      Serial.println("Mbps");
+      eth_connected = true;
+      break;
+    case ARDUINO_EVENT_ETH_DISCONNECTED:
+      Serial.println("ETH Disconnected");
+      eth_connected = false;
+      break;
+    case ARDUINO_EVENT_ETH_STOP:
+      Serial.println("ETH Stopped");
+      eth_connected = false;
+      break;
+    default:
+      break;
+  }
+}
+
+/*
+WiFiClientSecure client;
+
+void conectar_wifi(void) {
+  Serial.print("Conectando ao wifi: ");
+  Serial.println(ssid);
+  Serial.flush();
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+  
+    delay(500);
+    Serial.print(WiFi.status());
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi conectado");
+  Serial.println("IP: ");
+  Serial.println(WiFi.localIP());
+}
+*/
+void setup() {
+   delay(3000);
+  Serial.begin(115200);
+  Serial.println("INICIANDO");
+  
+  WiFi.onEvent(WiFiEvent);
+
+  //ETH.begin(ETH_PHY_ADDR, ETH_PHY_POWER (PIN), ETH_PHY_MDC (PIN), ETH_PHY_MDIO (PIN), ETH_PHY_TYPE, ETH_CLK_MODE);
+  ETH.begin(1, 16,23,18,ETH_PHY_LAN8720,ETH_CLOCK_GPIO0_IN);
+  Serial.println("CONFIGURADO");
+  pinMode(botao, INPUT);
+  //conectar_wifi();
+}
+
+void loop() {
+  lerBotao();
+  if (liberado > 0) {
+     if (eth_connected) {
+    Serial.println("ETH Conectado");
+  }
+  else
+  {
+    Serial.println("ETH Desconectado");
+  }
+    enviar_google_sheet();
+  }
+}
+
+void enviar_google_sheet(void) {
+  
+  HTTPClient http;
+  String url = "https://script.google.com/macros/s/" + GScriptId + "/exec?id=" + segredo;
+  Serial.println(url);
+  Serial.println("Atualizando planilha...");
+  http.begin(url.c_str());
+  http.setFollowRedirects(HTTPC_STRICT_FOLLOW_REDIRECTS);
+  int httpCode = http.GET(); // status code 200 representa sucesso de requisicao
+  Serial.print("Status Code: ");
+  Serial.println(httpCode);
+
+  String resposta;
+  if (httpCode > 0) {
+     resposta = http.getString();
+     Serial.print("Resposta: ");
+     Serial.println(resposta);
+  }
+  http.end();
+  liberado = 0;
+ }
+
+void lerBotao(void) {
+  int estadoBotao = digitalRead(botao);
+  if ( estadoBotao == HIGH ) { 
+    pressionado = 1;
+  } else {
+    if (pressionado > 0) {
+      liberado = 1;
+      pressionado = 0;
+    } 
+  }
+   delay(250);
+}
