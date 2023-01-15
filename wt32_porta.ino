@@ -5,6 +5,7 @@ void setup()
 {
   
   pinMode(0,OUTPUT);
+  pinMode(1,OUTPUT);
   pinMode(3,OUTPUT);
   pinMode(5,OUTPUT);
   pinMode(15,OUTPUT);
@@ -16,6 +17,7 @@ void setup()
 void loop()
 {
   digitalWrite(0,HIGH);
+  digitalWrite(1,HIGH);
   digitalWrite(3,HIGH);
   digitalWrite(5,HIGH);
   digitalWrite(17,HIGH);
@@ -25,6 +27,7 @@ void loop()
 
   
   digitalWrite(0,LOW);
+  digitalWrite(1,LOW);
   digitalWrite(3,LOW);
   digitalWrite(5,LOW);
   digitalWrite(17,LOW);
