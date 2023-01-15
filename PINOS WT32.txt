@@ -1,0 +1,29 @@
+WT32 - Portas:
+
+IO 0 - Apenas para transmissão e carregamento de código
+
+IO 2 - OutPut/InPut 
+
+IO 3 - Output/InPut, Rx
+
+IO 4 - Output/InPut
+
+IO 5 - Output/InPut, Rx
+
+IO 12 - Output/InPut
+
+IO 14 - Output/InPut
+
+IO 15 - Output/InPut
+
+IO 17 - Output/InPut, Tx
+
+IO 32 - Output/InPut
+
+IO 33 - Ouput/InPut
+
+IO 35 - InPut
+
+IO 36 - InPut
+
+IO 39 - InPut
