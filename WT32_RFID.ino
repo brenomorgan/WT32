@@ -48,7 +48,7 @@ void loop()
     Serial.println(cartao);
     Serial.println(" , dentro ");
     Serial.println(rdm6300.get_new_tag_id());
-  //digitalWrite(READ_LED_PIN, rdm6300.get_tag_id());
+  digitalWrite(READ_LED_PIN, rdm6300.get_tag_id());
   }
   delay(10);
 }
