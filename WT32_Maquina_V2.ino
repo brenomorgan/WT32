@@ -13,8 +13,8 @@ static bool eth_connected = false;
 
 
 
-const char* ssid     = "brisa-2567386"; // nome da rede
-const char* password = "spamirhj"; // senha
+//const char* ssid     = "ifce-professor"; // nome da rede
+//const char* password = "1fc3pr0f2019"; // senha
 String GScriptId = "AKfycbxZreK1sLQB8ocwEE19tMXmrGs3jnx5e84OkiFdA9JSkpsmzB4-1be7mZZYNbCK6vDK"; // id do script
                     
 String segredo = "valor1"; // segredo da tabela para retirar item
@@ -22,7 +22,7 @@ String segredo = "valor1"; // segredo da tabela para retirar item
 
 
 const int sendInterval = 50;
-
+const int LED_RFID = 12;
 const int stepPin = 15;
 //const int dirPin = 33; //Pino direcional vai diretamento no VCC ou GND dependendo do sentido de giro
 const int TCRT = 36;
@@ -73,8 +73,7 @@ void WiFiEvent(WiFiEvent_t event)
 }
 
 
-
-
+/*
 WiFiClientSecure client;
 void conectar_wifi(void) {
   Serial.print("Conectando ao wifi: ");
@@ -95,6 +94,7 @@ void conectar_wifi(void) {
   Serial.println("IP: ");
   Serial.println(WiFi.localIP());
 }
+*/
 
 void setup() {
 
@@ -108,16 +108,21 @@ void setup() {
   ETH.begin(1, 16,23,18,ETH_PHY_LAN8720,ETH_CLOCK_GPIO0_IN);
   Serial.println("CONFIGURADO");
   rdm6300.begin(RDM6300_RX_PIN);
+  pinMode (LED_RFID, OUTPUT);
   pinMode (stepPin, OUTPUT);
 //pinMode (dirPin, OUTPUT);
 pinMode (TCRT, INPUT);
-  conectar_wifi();
+digitalWrite(stepPin,LOW);
+  //conectar_wifi();
 }
 
 void loop() {
     
     if (rdm6300.get_new_tag_id())
     {
+      digitalWrite(LED_RFID,HIGH);
+      delay(1000);
+      digitalWrite(LED_RFID,LOW);
         //Serial.println(rdm6300.get_tag_id());
         segredo=rdm6300.get_tag_id();
          
@@ -183,15 +188,14 @@ void enviar_google_sheet(void) {
               segredo="";
               Serial.print("Créditos restantes: ");
               Serial.println(resposta);
-        
           } 
           digitalWrite(stepPin,HIGH);
           delay(15);
           digitalWrite(stepPin,LOW);
-          delay(15);  
-  } 
+          delay(15); 
   }
   
+  }  
   }
   
   http.end();
