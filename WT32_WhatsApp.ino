@@ -1,3 +1,5 @@
+//Site: https://www.callmebot.com/blog/free-api-whatsapp-messages/
+
 // Ãrea de InclusÃ£o de arquivos.
 
 #include <Arduino.h>                                                    // Para usar a framework do Arduino
@@ -33,7 +35,6 @@ String apiKey = "1435743";                                               // A ch
 
 void setup() 
 {
-    pinMode(Sensor, INPUT_PULLUP);                                      // Configura pino do sensor como entrada e em pull-up
     pinMode(Led1, OUTPUT);                                              // Configura pino do led1 como saida
     Serial.begin(115200);                                               // Inicia a serial com 115200 bps
     WiFi.begin(SSID, PASSWORD);                                         // Inicia o wifi com o nome da rede e a senha
@@ -55,9 +56,8 @@ void setup()
 
 void loop() 
 {
-
-  WhatsAppMessages("Teste WhatsApp Bot !");
   delay(300000); 
+  WhatsAppMessages("Teste WhatsApp Bot !");
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
