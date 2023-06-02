@@ -13,8 +13,8 @@ Keypad teclado = Keypad(makeKeymap(Teclas), Pin_Linhas ,Pin_Colunas, 4, 4);
 char tecla_press= teclado.getKey();
 String digitada;
 
-//const char* ssid     = "ifce-alunos"; // nome da rede
-//const char* password = "ifce4lun0s"; // senha
+//const char* ssid     = "*****"; // nome da rede
+//const char* password = "*****"; // senha
 String GScriptId = "AKfycbxZreK1sLQB8ocwEE19tMXmrGs3jnx5e84OkiFdA9JSkpsmzB4-1be7mZZYNbCK6vDK"; // id do script
                     
 String segredo = "valor1"; // segredo da tabela para retirar item
