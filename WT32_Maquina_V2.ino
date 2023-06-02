@@ -13,8 +13,8 @@ static bool eth_connected = false;
 
 
 
-//const char* ssid     = "ifce-professor"; // nome da rede
-//const char* password = "1fc3pr0f2019"; // senha
+//const char* ssid     = "*****"; // nome da rede
+//const char* password = "*****"; // senha
 String GScriptId = "AKfycbxZreK1sLQB8ocwEE19tMXmrGs3jnx5e84OkiFdA9JSkpsmzB4-1be7mZZYNbCK6vDK"; // id do script
                     
 String segredo = "valor1"; // segredo da tabela para retirar item
